@@ -9,22 +9,25 @@
 namespace tmpofd::element {
 
 struct OFD {
-  Attribute<String> Version;
-  Attribute<String> DocType;
+  attributes_t<string_t> Version;
+  attributes_t<string_t> DocType;
 
-  Vector<DocBody> DocBody;
+  vector_t<DocBody> DocBody;
 
 };
 
 } // tmpofd::element
-//
-//#include "mirrow/srefl/srefl_begin.hpp"
-//srefl_class(tmpofd::element::OFD,
-//            ctors()
-//                fields(
-//                    field(&tmpofd::element::OFD::Version),
-//                    field(&tmpofd::element::OFD::DocType),
-//                    field(&tmpofd::element::OFD::DocBody)
-//                )
-//)
-//#include "mirrow/srefl/srefl_end.hpp"
+
+#include "tmpofd/util/reflect_begin.h"
+
+REFLECT(
+    tmpofd::element::OFD,
+    FIELDS(
+        FIELD(&tmpofd::element::OFD::Version),
+        FIELD(&tmpofd::element::OFD::DocType)
+    )
+)
+
+#include "tmpofd/util/reflect_end.h"
+//,
+//FIELD(&tmpofd::element::OFD::DocBody)

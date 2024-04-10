@@ -5,12 +5,12 @@
 #pragma once
 
 #include "tmpofd/element/definitions/definitions.h"
-#include "tmpofd/util/relfection.h"
+#include "tmpofd/util/reflection.h"
 
 namespace tmpofd::element {
 
 struct Keyword {
-  String value;
+  string_t value;
 
 };
 

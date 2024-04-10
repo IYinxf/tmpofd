@@ -9,7 +9,7 @@
 namespace tmpofd::element {
 
 struct CustomDatas {
-  Vector<CustomData> CustomData;
+  vector_t<CustomData> CustomData;
 
 };
 

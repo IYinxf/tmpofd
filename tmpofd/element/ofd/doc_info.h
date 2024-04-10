@@ -10,18 +10,18 @@
 namespace tmpofd::element {
 
 struct DocInfo {
-  String DocID;
-  String Title;
-  String Author;
-  String Subject;
-  String Abstract;
-  Date CreationDate;
-  Date ModDate;
-  String DocUsage;
-  ST_Loc Cover;
+  string_t DocID;
+  string_t Title;
+  string_t Author;
+  string_t Subject;
+  string_t Abstract;
+  date_t CreationDate;
+  date_t ModDate;
+  string_t DocUsage;
+  loc_t Cover;
   Keywords Keywords;
-  String Creator;
-  String CreatorVersion;
+  string_t Creator;
+  string_t CreatorVersion;
   CustomDatas CustomDatas;
 
 };

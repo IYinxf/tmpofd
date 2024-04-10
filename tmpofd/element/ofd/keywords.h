@@ -9,7 +9,7 @@
 namespace tmpofd::element {
 
 struct Keywords {
-  Vector<Keyword> Keyword;
+  vector_t<Keyword> Keyword;
 
 };
 

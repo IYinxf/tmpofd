@@ -5,15 +5,15 @@
 #pragma once
 
 #include "tmpofd/element/definitions/definitions.h"
-#include "tmpofd/util/relfection.h"
+#include "tmpofd/util/reflection.h"
 
 namespace tmpofd::element {
 
 struct Version {
-  Attribute<ST_ID> ID{};
-  Attribute<int> Index{};
-  Attribute<bool> Current{};
-  Attribute<ST_Loc> BaseLoc;
+  attributes_t<id_t> ID{};
+  attributes_t<int> Index{};
+  attributes_t<bool> Current{};
+  attributes_t<loc_t> BaseLoc;
 
 };
 

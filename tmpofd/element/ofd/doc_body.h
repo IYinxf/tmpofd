@@ -11,21 +11,22 @@ namespace tmpofd::element {
 
 struct DocBody {
   DocInfo DocInfo;
-  ST_Loc DocRoot;
+  loc_t DocRoot;
   Versions Versions;
-  ST_Loc Signatures;
+  loc_t Signatures;
 
 };
 
 } // tmpofd::element
-//
-//#include "mirrow/srefl/srefl.hpp"
-//#include "mirrow/srefl/srefl_begin.hpp"
-//srefl_class(tmpofd::element::DocBody,
-//            ctors()
-//                fields(
-//                    field(&tmpofd::element::DocBody::DocRoot),
-//                    field(&tmpofd::element::DocBody::Signatures)
-//                )
-//)
-//#include "mirrow/srefl/srefl_end.hpp"
+
+#include "tmpofd/util/reflect_begin.h"
+
+REFLECT(
+    tmpofd::element::DocBody,
+    FIELDS(
+        FIELD(&tmpofd::element::DocBody::DocRoot),
+        FIELD(&tmpofd::element::DocBody::Signatures)
+    )
+)
+
+#include "tmpofd/util/reflect_end.h"

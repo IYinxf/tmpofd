@@ -9,7 +9,7 @@
 namespace tmpofd::element {
 
 struct Versions {
-  Vector<Version> Version;
+  vector_t<Version> Version;
 
 };
 

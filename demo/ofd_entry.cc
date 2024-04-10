@@ -5,29 +5,25 @@
 #include "ofd_entry.h"
 
 #include "tmpofd/element/ofd/ofd.h"
-#include "mirrow/srefl/reflect.hpp"
 
 namespace tmpofd {
 } // tmpofd
 
 int main() {
 
-  std::string DocInfo("DocInfo");
+  tmpofd::element::OFD ofd{"1.1", "OFD", {{"Doc_0/Document.xml", "Doc_0/Signs/Signatures.xml"}}};
 
-  DocInfo[0] = std::tolower(DocInfo[0], std::locale());
+  auto reflected = tmpofd::util::reflect<tmpofd::element::OFD>();
 
-  tmpofd::element::OFD ofd {
-    "1.1", "OFD"
-  };//, {{"Doc_0/Document.xml", "Doc_0/Signs/Signatures.xml"}}
+  std::vector<std::pair<std::string_view, std::string&>> table;
+  reflected.visit_fields([&table, &ofd](auto &&field) {
+    auto &member = std::invoke(field.pointer(), &ofd);
 
-  auto reflect = mirrow::srefl::reflect<decltype(ofd)>();
-
-  std::vector<std::pair<std::string_view, std::string_view>> table;
-  reflect.visit_member_variables([&table, &ofd](auto&& field) {
-    auto& member = field.invoke(&ofd);
-
-    table.emplace_back(field.name(), member.value);
+    table.emplace_back(field.name(), member.value_);
   });
+
+  table[0].second = "1.8";
+  table[1].second = "doc_type";
 
   return 0;
 }
