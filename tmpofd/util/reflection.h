@@ -8,35 +8,38 @@
 
 namespace tmpofd::util {
 
-namespace internal {
-
 template<typename T>
-struct base_type_info {
-  using type_ = T;
-};
-
-}
-
-template<typename T>
-struct type_info;
+struct class_info;
 
 template<typename T>
 struct reflected_info final {
- public:
-  using type_ = type_info<T>;
+  using class_ = class_info<T>;
 
-  constexpr auto name() const noexcept {
-    return type_::name();
+  constexpr auto class_name() const noexcept {
+    return class_::name();
   }
 
-  template<typename Function>
-  void visit_fields(Function &&func) {
-    if constexpr (internal::has_fields_v<type_>) {
+  template<typename F>
+  void visit_attributes(F &&callback) {
+    if constexpr (internal::has_attributes<class_>) {
       std::apply(
-          [&func](auto &&... args) {
-            (func(std::forward<decltype(args)>(args)), ...);
+          [&callback](auto &&... args) {
+            (callback(std::forward<decltype(args)>(args)), ...);
           },
-          type_::fields);
+          class_::attributes_
+      );
+    }
+  }
+
+  template<typename F>
+  void visit_fields(F &&callback) {
+    if constexpr (internal::has_fields<class_>) {
+      std::apply(
+          [&callback](auto &&... args) {
+            (callback(std::forward<decltype(args)>(args)), ...);
+          },
+          class_::fields_
+      );
     }
   }
 

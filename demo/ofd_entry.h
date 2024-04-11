@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "tmpofd/element/definitions/definitions.h"
+#include "tmpofd/elem/type_def/type_def.h"
 
 namespace tmpofd {
 

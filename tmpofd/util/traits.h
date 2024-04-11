@@ -31,60 +31,40 @@ constexpr size_t list_size_v = detail::list_size<T>::value_;
 template<typename T>
 constexpr bool is_list_empty_v = list_size_v<T> == 0;
 
-template<typename T, typename = void>
-struct has_fields final : std::false_type {};
-
-template<typename T>
-struct has_fields<T, std::void_t<decltype(T::fields)>> {
-  static constexpr bool value_ = !is_list_empty_v<std::remove_cv_t<std::remove_const_t<decltype(T::fields)>>>;
-};
-
 }
 
 template<typename T>
 using field_type_t = typename detail::field_type<T>::type_;
 
 template<typename T>
-constexpr bool has_fields_v = detail::has_fields<T>::value_;
+constexpr bool has_attributes = !detail::is_list_empty_v<std::remove_cv_t<decltype(T::attributes_)>>;
+
+template<typename T>
+constexpr bool has_fields = !detail::is_list_empty_v<std::remove_cv_t<decltype(T::fields_)>>;
 
 template<typename T>
 struct basic_field_traits {
   using type_ = field_type_t<T>;
 };
 
-inline constexpr auto strip_name(std::string_view name) {
-  if (auto i = name.find_last_of('&'); i != std::string_view::npos) {
-    name = name.substr(i + 1, name.length());
-  }
+inline constexpr void strip_name(std::string_view &name) {
   if (auto i = name.find_last_of(':'); i != std::string_view::npos) {
     name = name.substr(i + 1, name.length());
   }
-  if (auto i = name.find_first_of(')'); i != std::string_view::npos) {
-    name = name.substr(0, i);
-  }
-
-  return name;
 }
 
 }
 
 template<typename T>
-struct field_traits;
-
-template<typename T>
-struct field_traits : internal::basic_field_traits<T> {
+struct field_traits final : internal::basic_field_traits<T> {
   constexpr field_traits(T &&pointer, std::string_view name)
       : pointer_(std::forward<T>(pointer)),
-        name_(internal::strip_name(name)) {}
-
-  constexpr auto pointer() const noexcept { return pointer_; }
+        name_(name) { internal::strip_name(name_); }
 
   constexpr auto name() const noexcept { return name_; }
 
-  template<typename... Args>
-  decltype(auto) invoke(Args &&... args) {
-    return std::invoke(this->pointer_, std::forward<Args>(args)...);
-  }
+  template<typename Object>
+  constexpr auto &get(Object &&object) const noexcept { return std::invoke(pointer_, std::forward<Object>(object)); }
 
  private:
   T pointer_;

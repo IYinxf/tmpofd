@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "tmpofd/element/definitions/definitions.h"
+#include "tmpofd/elem/type_def/type_def.h"
 #include "tmpofd/util/reflection.h"
 
 namespace tmpofd::element {
@@ -14,4 +14,4 @@ struct Keyword {
 
 };
 
-} // tmpofd::element
+} // tmpofd::elem

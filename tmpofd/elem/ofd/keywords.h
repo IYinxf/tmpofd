@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "tmpofd/element/ofd/keyword.h"
+#include "tmpofd/elem/ofd/keyword.h"
 
 namespace tmpofd::element {
 
@@ -13,4 +13,4 @@ struct Keywords {
 
 };
 
-} // tmpofd::element
+} // tmpofd::elem

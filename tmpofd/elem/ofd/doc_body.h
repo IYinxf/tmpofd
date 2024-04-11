@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "tmpofd/element/ofd/doc_info.h"
-#include "tmpofd/element/ofd/versions.h"
+#include "tmpofd/elem/ofd/doc_info.h"
+#include "tmpofd/elem/ofd/versions.h"
 
 namespace tmpofd::element {
 
@@ -17,15 +17,17 @@ struct DocBody {
 
 };
 
-} // tmpofd::element
+} // tmpofd::elem
+
+using DocBody = tmpofd::element::DocBody;
 
 #include "tmpofd/util/reflect_begin.h"
 
 REFLECT(
-    tmpofd::element::DocBody,
+    DocBody,
     FIELDS(
-        FIELD(&tmpofd::element::DocBody::DocRoot),
-        FIELD(&tmpofd::element::DocBody::Signatures)
+        FIELD(&DocBody::DocRoot, OFD_NAMESPACE),
+        FIELD(&DocBody::Signatures, OFD_NAMESPACE)
     )
 )
 

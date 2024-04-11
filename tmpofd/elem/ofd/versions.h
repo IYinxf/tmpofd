@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "tmpofd/element/ofd/version.h"
+#include "tmpofd/elem/ofd/version.h"
 
 namespace tmpofd::element {
 
@@ -13,4 +13,4 @@ struct Versions {
 
 };
 
-} // tmpofd::element
+} // tmpofd::elem

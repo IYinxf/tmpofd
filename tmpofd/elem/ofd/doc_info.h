@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "tmpofd/element/ofd/keywords.h"
-#include "tmpofd/element/ofd/custom_datas.h"
+#include "tmpofd/elem/ofd/keywords.h"
+#include "tmpofd/elem/ofd/custom_datas.h"
 
 namespace tmpofd::element {
 
@@ -26,4 +26,4 @@ struct DocInfo {
 
 };
 
-} // tmpofd::element
+} // tmpofd::elem

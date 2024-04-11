@@ -8,7 +8,7 @@
 
 namespace tmpofd::element {
 
-static const std::string _namespace("ofd:");
+#define OFD_NAMESPACE "ofd:"
 
 using string_t = std::string;
 
@@ -67,4 +67,4 @@ struct attributes_t {
   T value_;
 };
 
-} // tmpofd::element
+} // tmpofd::elem
