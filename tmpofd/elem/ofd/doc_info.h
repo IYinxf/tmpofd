@@ -7,7 +7,7 @@
 #include "tmpofd/elem/ofd/keywords.h"
 #include "tmpofd/elem/ofd/custom_datas.h"
 
-namespace tmpofd::element {
+namespace tmpofd::elem {
 
 struct DocInfo {
   string_t DocID;

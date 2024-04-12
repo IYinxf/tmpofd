@@ -6,7 +6,7 @@
 
 #include "tmpofd/elem/ofd/keyword.h"
 
-namespace tmpofd::element {
+namespace tmpofd::elem {
 
 struct Keywords {
   vector_t<Keyword> Keyword;

@@ -10,7 +10,7 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 .idea
-tmpofd/util/exports.h
-tmpofd/util/version.h
+tmpofd/refl/exports.h
+tmpofd/refl/version.h
 cmake-build-debug
 cmake-build-debug-visual-studio

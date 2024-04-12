@@ -5,9 +5,9 @@
 #pragma once
 
 #include "tmpofd/elem/type_def/type_def.h"
-#include "tmpofd/util/reflection.h"
+#include "tmpofd/refl/reflection.h"
 
-namespace tmpofd::element {
+namespace tmpofd::elem {
 
 struct Keyword {
   string_t value;

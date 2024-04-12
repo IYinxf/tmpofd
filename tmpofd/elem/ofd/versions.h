@@ -6,7 +6,7 @@
 
 #include "tmpofd/elem/ofd/version.h"
 
-namespace tmpofd::element {
+namespace tmpofd::elem {
 
 struct Versions {
   vector_t<Version> Version;

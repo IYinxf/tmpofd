@@ -4,7 +4,7 @@
 
 #undef TMPOFD_REFLECT_BEGIN
 
-} // tmpofd::util
+} // tmpofd::refl
 
 #undef REFLECT
 #undef FIELDS

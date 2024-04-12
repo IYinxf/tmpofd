@@ -7,7 +7,7 @@
 #include "tmpofd/elem/ofd/doc_info.h"
 #include "tmpofd/elem/ofd/versions.h"
 
-namespace tmpofd::element {
+namespace tmpofd::elem {
 
 struct DocBody {
   DocInfo DocInfo;
@@ -19,16 +19,14 @@ struct DocBody {
 
 } // tmpofd::elem
 
-using DocBody = tmpofd::element::DocBody;
-
-#include "tmpofd/util/reflect_begin.h"
+#include "tmpofd/refl/reflect_begin.h"
 
 REFLECT(
-    DocBody,
+    tmpofd::elem::DocBody, OFD_NAMESPACE"DocBody",
     FIELDS(
-        FIELD(&DocBody::DocRoot, OFD_NAMESPACE),
-        FIELD(&DocBody::Signatures, OFD_NAMESPACE)
+        FIELD(&tmpofd::elem::DocBody::DocRoot, OFD_NAMESPACE"DocRoot"),
+        FIELD(&tmpofd::elem::DocBody::Signatures, OFD_NAMESPACE"Signatures")
     )
 )
 
-#include "tmpofd/util/reflect_end.h"
+#include "tmpofd/refl/reflect_end.h"

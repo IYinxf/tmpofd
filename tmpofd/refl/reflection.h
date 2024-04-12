@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "tmpofd/util/traits.h"
+#include "tmpofd/refl/traits.h"
 
-namespace tmpofd::util {
+namespace tmpofd::refl {
 
 template<typename T>
 struct class_info;
@@ -17,18 +17,6 @@ struct reflected_info final {
 
   constexpr auto class_name() const noexcept {
     return class_::name();
-  }
-
-  template<typename F>
-  void visit_attributes(F &&callback) {
-    if constexpr (internal::has_attributes<class_>) {
-      std::apply(
-          [&callback](auto &&... args) {
-            (callback(std::forward<decltype(args)>(args)), ...);
-          },
-          class_::attributes_
-      );
-    }
   }
 
   template<typename F>
@@ -45,9 +33,13 @@ struct reflected_info final {
 
 };
 
+namespace internal {
+
 template<typename T>
 constexpr auto reflect() {
   return reflected_info<std::remove_cvref_t<T>>();
 }
 
-} // tmpofd::util
+}
+
+} // tmpofd::refl

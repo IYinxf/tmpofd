@@ -5,12 +5,12 @@
 #pragma once
 
 #include "tmpofd/elem/type_def/type_def.h"
-#include "tmpofd/util/reflection.h"
+#include "tmpofd/refl/reflection.h"
 
-namespace tmpofd::element {
+namespace tmpofd::elem {
 
 struct CustomData {
-  attributes_t<string_t> Name;
+  attribute_t<string_t > Name;
 
 };
 
