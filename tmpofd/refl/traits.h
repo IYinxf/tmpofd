@@ -9,86 +9,59 @@
 
 namespace tmpofd::refl {
 
+template<typename>
+void reflect_it();
+
 namespace internal {
 
 namespace detail {
 
 template<typename>
-struct array_t;
-
-template<typename>
-inline constexpr bool is_st_array = false;
-
-template<typename T>
-inline constexpr bool is_st_array<array_t<T>> = true;
-
-template<typename>
-struct attribute_t;
-
-template<typename>
-inline constexpr bool is_attribute = false;
-
-template<typename T>
-inline constexpr bool is_attribute<attribute_t<T>> = true;
-
-}
-
-template<typename T>
-inline constexpr bool is_st_array_v = detail::is_st_array<T>;
-
-template<typename T>
-inline constexpr bool is_attribute_v = detail::is_attribute<T>;
-
-}
-
-namespace internal {
-
-namespace detail {
-
-template<typename T>
-struct field_type {
-  using type_ = T;
-};
-
-template<typename>
-struct list_size;
+struct list_size_t;
 
 template<template<typename...> typename T, typename... Args>
-struct list_size<T<Args...>> {
-  static constexpr size_t value_ = sizeof...(Args);
+struct list_size_t<T<Args...>> {
+  constexpr static size_t value_ = sizeof...(Args);
 };
 
 template<typename T>
-constexpr size_t list_size_v = list_size<T>::value_;
+constexpr size_t list_size_v = list_size_t<T>::value_;
 
 template<typename T>
-constexpr bool is_empty_list_v = list_size_v<T> == 0;
+constexpr inline bool is_empty_list_v = list_size_v<T> == 0;
 
-}
-
-template<typename T>
-using field_type_t = typename detail::field_type<T>::type_;
+template<typename, typename = void>
+struct is_reflected_t : std::false_type {};
 
 template<typename T>
-constexpr bool has_fields = !detail::is_empty_list_v<std::remove_cv_t<decltype(T::fields_)>>;
-
-template<typename T>
-struct basic_field_traits {
-  using type_ = field_type_t<T>;
+struct is_reflected_t<
+    T,
+    std::void_t<decltype(tmpofd::refl::reflect_it(std::declval<T>()))>
+> : std::true_type {
 };
 
 }
 
 template<typename T>
-struct field_traits final : internal::basic_field_traits<T> {
+constexpr inline bool has_fields = !detail::is_empty_list_v<std::remove_cvref_t<decltype(T::fields_)>>;
+
+template<typename T>
+constexpr inline bool is_reflected_v = detail::is_reflected_t<std::remove_cvref_t<T>>::value;
+///TODO: fix this
+
+}
+
+template<typename T>
+struct field_traits final {
   constexpr field_traits(T &&pointer, std::string_view name)
       : pointer_(std::forward<T>(pointer)),
         name_(name) {}
 
   constexpr auto name() const noexcept { return name_; }
 
-  template<typename Object>
-  constexpr auto &get(Object &&object) const noexcept { return std::invoke(pointer_, std::forward<Object>(object)); }
+  template<typename... Args>
+  decltype(auto) invoke(Args &&... args) { return std::invoke(this->pointer_, std::forward<Args>(args)...); }
+  /// TODO: fix this
 
  private:
   T pointer_;

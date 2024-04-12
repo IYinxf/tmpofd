@@ -4,11 +4,55 @@
 
 #pragma once
 
-#include "tmpofd/refl/traits.h"
-
 #include <filesystem>
 
 namespace tmpofd::elem {
+
+namespace internal {
+
+namespace detail {
+
+template<typename T>
+using array_t = std::vector<T>;
+
+template<typename>
+constexpr inline bool is_array_t = false;
+
+template<typename T>
+constexpr inline bool is_array_t<array_t<T>> = true;
+
+template<typename T>
+struct attribute_t {
+  T value_;
+};
+
+template<typename>
+constexpr inline bool is_attribute_t = false;
+
+template<typename T>
+constexpr inline bool is_attribute_t<attribute_t<T>> = true;
+
+template<typename T>
+using vector_t = std::vector<T>;
+
+template<typename, typename = void>
+constexpr inline bool is_vector_t = false;
+
+template<typename T>
+constexpr inline bool is_vector_t<vector_t<T>> = true;
+
+}
+
+template<typename T>
+constexpr inline bool is_array_v = detail::is_array_t<std::remove_cvref_t<T>>;
+
+template<typename T>
+constexpr inline bool is_attribute_v = detail::is_attribute_t<std::remove_cvref_t<T>>;
+
+template<typename T>
+constexpr inline bool is_vector_v = detail::is_vector_t<std::remove_cvref_t<T>>;
+
+}
 
 #define OFD_NAMESPACE "ofd:"
 
@@ -24,13 +68,10 @@ using string_t = std::string;
 
 using date_t = string_t;
 
-template<typename T>
-using vector_t = std::vector<T>;
-
 using loc_t = std::filesystem::path;
 
-template<typename T, std::enable_if_t<!std::is_same_v<T, loc_t> && !tmpofd::refl::internal::is_st_array_v<T>, int> = 0>
-using array_t = vector_t<T>;
+template<typename T, std::enable_if_t<!std::is_same_v<T, loc_t> && !internal::is_array_v<T>, int> = 0>
+using array_t = internal::detail::array_t<T>;
 
 template<typename X, typename Y>
 struct pos_t {
@@ -47,8 +88,9 @@ struct box_t {
 };
 
 template<typename T>
-struct attribute_t {
-  T value_;
-};
+using attribute_t = internal::detail::attribute_t<T>;
+
+template<typename T>
+using vector_t = internal::detail::vector_t<T>;
 
 } // tmpofd::elem

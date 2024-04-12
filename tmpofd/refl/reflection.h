@@ -8,7 +8,7 @@
 
 namespace tmpofd::refl {
 
-template<typename T>
+template<typename>
 struct class_info;
 
 template<typename T>
@@ -19,15 +19,27 @@ struct reflected_info final {
     return class_::name();
   }
 
+  template<size_t Idx, typename Function>
+  void do_visit_member_variables(Function &&func) {
+    auto fields = class_::fields_;
+    if constexpr (Idx < tmpofd::refl::internal::detail::list_size_v<
+        std::remove_cv_t<std::remove_reference_t<decltype(fields)>>
+    >) {
+      func(std::get<Idx>(fields));
+      do_visit_member_variables<Idx + 1>(std::forward<Function>(func));
+    }
+  }
+
   template<typename F>
   void visit_fields(F &&callback) {
     if constexpr (internal::has_fields<class_>) {
-      std::apply(
-          [&callback](auto &&... args) {
-            (callback(std::forward<decltype(args)>(args)), ...);
-          },
-          class_::fields_
-      );
+      do_visit_member_variables<0>(std::forward<F>(callback));
+
+//      auto _fields = class_::fields_;
+//
+//      [&callback, &_fields]<std::size_t... i>(std::index_sequence<i...>) {
+//        (callback(std::get<i>(_fields)), ...);
+//      }(std::make_index_sequence<std::tuple_size_v<decltype(_fields)>>());
     }
   }
 

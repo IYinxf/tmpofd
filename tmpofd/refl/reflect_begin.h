@@ -2,16 +2,16 @@
 // Created by Yinxf on 2024/4/10.
 //
 
-#define REFLECT(class_t, class_name, ...)                     \
-  template<>                                                  \
-  struct class_info<class_t> {                                \
-  static constexpr std::string_view name() {                  \
-    return class_name;                                        \
-  }                                                           \
-  __VA_ARGS__                                                 \
-};                                                            \
-inline static constexpr auto reflect_it(class_t const &it) {  \
-  return internal::reflect<decltype(it)>();                   \
+#define REFLECT(class_t, class_name, ...)                         \
+template<>                                                        \
+struct class_info<class_t> {                                      \
+  static constexpr std::string_view name() {                      \
+    return class_name;                                            \
+  }                                                               \
+  __VA_ARGS__                                                     \
+};                                                                \
+inline static constexpr auto reflect_it(class_t &it) {            \
+  return internal::reflect<std::remove_cvref_t<decltype(it)>>();  \
 }
 
 #define FIELDS(...) inline static constexpr auto fields_ = std::make_tuple(__VA_ARGS__);

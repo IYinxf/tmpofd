@@ -10,9 +10,9 @@
 namespace tmpofd::elem {
 
 struct DocBody {
-  DocInfo DocInfo;
+//  DocInfo DocInfo;
   loc_t DocRoot;
-  Versions Versions;
+//  Versions Versions;
   loc_t Signatures;
 
 };
