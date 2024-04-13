@@ -7,6 +7,8 @@
 #include "tmpofd/serd/traits.h"
 #include "tmpofd/refl/reflection.h"
 
+#include <stdexcept>
+
 namespace tmpofd::serd {
 
 namespace internal {

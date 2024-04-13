@@ -9,7 +9,7 @@
 namespace tmpofd::elem {
 
 struct CustomDatas {
-  vector_t<CustomData> CustomData;
+  vector_t<CustomData> custom_data_;
 
 };
 
@@ -20,7 +20,7 @@ struct CustomDatas {
 REFLECT(
     tmpofd::elem::CustomDatas, OFD_NAMESPACE"CustomDatas",
     FIELDS(
-        FIELD(&tmpofd::elem::CustomDatas::CustomData, OFD_NAMESPACE"CustomData")
+        FIELD(&tmpofd::elem::CustomDatas::custom_data_, OFD_NAMESPACE"CustomData")
     )
 )
 

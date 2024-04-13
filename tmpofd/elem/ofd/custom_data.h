@@ -10,7 +10,7 @@
 namespace tmpofd::elem {
 
 struct CustomData {
-  attribute_t<string_t> Name;
+  attribute_t<string_t> name_;
 
 };
 
@@ -21,7 +21,7 @@ struct CustomData {
 REFLECT(
     tmpofd::elem::CustomData, OFD_NAMESPACE"CustomData",
     FIELDS(
-        FIELD(&tmpofd::elem::CustomData::Name, "Name")
+        FIELD(&tmpofd::elem::CustomData::name_, "Name")
     )
 )
 
