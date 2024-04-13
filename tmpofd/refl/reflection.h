@@ -48,7 +48,7 @@ struct is_reflected<
 > : std::true_type {
 };
 
-}
+} // detail
 
 template<typename T>
 constexpr auto reflect() {
@@ -58,6 +58,6 @@ constexpr auto reflect() {
 template<typename T>
 constexpr inline bool is_reflected_v =detail::is_reflected<std::remove_cvref_t<T>>::value;
 
-}
+} // internal
 
 } // tmpofd::refl

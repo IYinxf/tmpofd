@@ -28,12 +28,12 @@ constexpr size_t list_size_v = list_size_t<T>::value_;
 template<typename T>
 constexpr inline bool is_empty_list_v = list_size_v<T> == 0;
 
-}
+} // detail
 
 template<typename T>
 constexpr inline bool has_fields = !detail::is_empty_list_v<std::remove_cvref_t<decltype(T::fields_)>>;
 
-}
+} // internal
 
 template<typename T>
 struct field_traits final {

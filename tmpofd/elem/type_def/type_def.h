@@ -58,7 +58,7 @@ constexpr inline bool is_vector_t = false;
 template<typename T>
 constexpr inline bool is_vector_t<vector_t<T>> = true;
 
-}
+} // detail
 
 template<typename T>
 constexpr inline bool is_array_v = detail::is_array_t<std::remove_cvref_t<T>>;
@@ -69,7 +69,7 @@ constexpr inline bool is_attribute_v = detail::is_attribute_t<std::remove_cvref_
 template<typename T>
 constexpr inline bool is_vector_v = detail::is_vector_t<std::remove_cvref_t<T>>;
 
-}
+} // internal
 
 #define OFD_NAMESPACE "ofd:"
 

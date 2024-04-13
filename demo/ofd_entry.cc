@@ -1,7 +1,7 @@
 //
 // Created by Yinxf on 2024/4/9.
 //
-
+#define _CRT_SECURE_NO_WARNINGS
 #include "tmpofd/elem/ofd/ofd.h"
 #include "tmpofd/serd/serialization.h"
 #include "tmpofd/serd/deserialization.h"
