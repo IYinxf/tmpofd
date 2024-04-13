@@ -4,12 +4,11 @@
 
 #pragma once
 
-namespace tmpofd {
-namespace serd {
 
-class deserialization {
+namespace tmpofd::serd {
 
-};
+void from_xml() {
 
-} // serd
-} // tmpofd
+}
+
+} // tmpofd::serd

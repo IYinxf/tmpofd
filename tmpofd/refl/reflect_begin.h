@@ -2,15 +2,15 @@
 // Created by Yinxf on 2024/4/10.
 //
 
-#define REFLECT(class_t, class_name, ...)                         \
+#define REFLECT(type, type_name, ...)                             \
 template<>                                                        \
-struct class_info<class_t> {                                      \
+struct struct_info<type> {                                        \
   static constexpr std::string_view name() {                      \
-    return class_name;                                            \
+    return type_name;                                             \
   }                                                               \
   __VA_ARGS__                                                     \
 };                                                                \
-inline static constexpr auto reflect_it(class_t &it) {            \
+inline static constexpr auto reflect_it(type const &it) {         \
   return internal::reflect<std::remove_cvref_t<decltype(it)>>();  \
 }
 
