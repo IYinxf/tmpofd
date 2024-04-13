@@ -17,7 +17,7 @@ execute_process(
         OUTPUT_VARIABLE GIT_SHA1
         ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE
 )
-configure_file("${PROJECT_SOURCE_DIR}/templates/version.h.in" "${PROJECT_SOURCE_DIR}/${PROJECT_NAME}/refl/version.h" @ONLY)
+configure_file("${PROJECT_SOURCE_DIR}/templates/version.h.in" "${PROJECT_SOURCE_DIR}/${PROJECT_NAME}/version.h" @ONLY)
 
 if (MSVC)
     add_compile_options(/utf-8)

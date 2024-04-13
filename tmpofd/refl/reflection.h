@@ -12,6 +12,9 @@ template<typename>
 struct struct_info;
 
 template<typename T>
+constexpr auto reflect_it(T const &it);
+
+template<typename T>
 struct reflected final {
   using struct_ = struct_info<T>;
 
@@ -34,10 +37,26 @@ struct reflected final {
 
 namespace internal {
 
+namespace detail {
+
+template<typename, typename = void>
+struct is_reflected : std::false_type {};
+
+template<typename T>
+struct is_reflected<
+    T, std::void_t<decltype(tmpofd::refl::reflect_it(std::declval<T>()))>
+> : std::true_type {
+};
+
+}
+
 template<typename T>
 constexpr auto reflect() {
   return reflected<std::remove_cvref_t<T>>();
 }
+
+template<typename T>
+constexpr inline bool is_reflected_v =detail::is_reflected<std::remove_cvref_t<T>>::value;
 
 }
 

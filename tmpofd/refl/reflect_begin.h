@@ -10,7 +10,8 @@ struct struct_info<type> {                                        \
   }                                                               \
   __VA_ARGS__                                                     \
 };                                                                \
-inline static constexpr auto reflect_it(type const &it) {         \
+template<>                                                        \
+constexpr auto reflect_it(type const &it) {                       \
   return internal::reflect<std::remove_cvref_t<decltype(it)>>();  \
 }
 
