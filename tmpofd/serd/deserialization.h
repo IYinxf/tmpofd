@@ -87,11 +87,11 @@ template<
     > = 0
 >
 void parse_attr_value(std::string_view value, Object &obj) {
-  auto ret = std::from_chars(value.begin(), value.end(), obj);
-  if (std::errc() != ret.ec) {
-    std::string error = std::string("Parse attribute failed: ").append(value);
-    throw std::runtime_error(error);
-  }
+//  auto ret = std::from_chars(value.begin(), value.end(), obj);
+//  if (std::errc() != ret.ec) {
+//    std::string error = std::string("Parse attribute failed: ").append(value);
+//    throw std::runtime_error(error);
+//  }
 }
 
 template<
@@ -128,10 +128,11 @@ void parse_attribute(Itr &&itr, Itr &&end, Object &obj) {
     std::string_view value = std::string_view{&*v_begin, static_cast<size_t>(std::distance(v_begin, v_end))};
 
     reflected.visit_fields(
-        [&obj, &key, &value](auto &&field) {
-          if constexpr (tmpofd::elem::internal::is_attribute_v<decltype(field.invoke(obj))>) {
-            if (key == field.name())
+        [&key, &value, &obj](auto &&field) {
+          if (key == field.name()) {
+            if constexpr (tmpofd::elem::internal::is_attribute_v<decltype(field.invoke(obj))>) {
               parse_attr_value(value, field.invoke(obj));
+            }
           }
         }
     );
@@ -142,30 +143,42 @@ template<
     typename Itr, typename Object,
     std::enable_if_t<tmpofd::refl::internal::is_reflected_v<Object>, int> = 0
 >
-void parse_element(Itr &&itr, Itr &&end, std::string_view name, Object &obj) {
+void parse_element(Itr &&itr, Itr &&end, std::string_view name, Object &obj) { ///TODO: finish this
   parse_attribute(itr, end, obj);
 
   auto reflected = tmpofd::refl::reflect_it(obj);
-  /// TODO: parse element value
+
+  skip_till<'>'>(itr, end);
+  ++itr;
+
+  skip_spaces_and_newline(itr, end);
+  match<'<'>(itr, end);
+  auto start = itr;
+  detail::skip_till_greater_or_space(itr, end);
+  std::string_view key = std::string_view{&*start, static_cast<size_t>(std::distance(start, itr))};
+
   reflected.visit_fields(
-      [&obj](auto &&field) {
-        if constexpr (tmpofd::elem::internal::is_vector_v<decltype(field.invoke(obj))>) {
-          for (auto &i : field.invoke(obj)) {
-            if constexpr (tmpofd::refl::internal::is_reflected_v<decltype(i)>) {
-              parse_element(i);
+      [&itr, &end, &key, &obj](auto &&field) {
+        if (key == field.name()) {
+          if constexpr (tmpofd::elem::internal::is_vector_v<decltype(field.invoke(obj))>) {
+            std::remove_cvref_t<decltype(field.invoke(obj)[0])> item{};
+
+            if constexpr (tmpofd::refl::internal::is_reflected_v<decltype(item)>) {
+              parse_element(itr, end, key, item);
+              field.invoke(obj).emplace_back(item);
             } else {
-              ///
+              auto &member = item;
+
+              field.invoke(obj).emplace_back(item);
+            }
+          } else {
+            if constexpr (tmpofd::refl::internal::is_reflected_v<decltype(field.invoke(obj))>) {
+              parse_element(itr, end, key, field.invoke(obj));
+            } else {
+              auto &member = field.invoke(obj);
             }
           }
-        } else {
-          if constexpr (tmpofd::refl::internal::is_reflected_v < decltype(field.invoke(obj)) >) {
-            parse_element(field.invoke(obj));
-          } else {
-            auto &member = field.invoke(obj);
-            ///
-          }
         }
-
       }
   );
 }

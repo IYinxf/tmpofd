@@ -11,7 +11,7 @@
 std::string readFile(const std::string &filePath, const char *mode) {
   if (filePath.empty() || nullptr == mode) return {};
 
-  FILE *fp = fopen(filePath.c_str(), mode);
+  FILE * fp = fopen(filePath.c_str(), mode);
   if (nullptr == fp) return {};
 
   fseek(fp, 0, SEEK_END);
@@ -67,7 +67,6 @@ int main() {
 
   std::vector<std::string_view> declaration;
   tmpofd::serd::from_xml(ofd_xml, declaration, ofd);
-
 
 
 //  ofd.Version = "Version";
