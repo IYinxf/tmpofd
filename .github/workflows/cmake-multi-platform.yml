@@ -51,10 +51,10 @@ jobs:
 
     - name: Install Catch2
       run: >
-        git clone https://github.com/catchorg/Catch2.git
-        mkdir -p Catch2/build
-        cd Catch2/build
-        cmake ..
+        git clone https://github.com/catchorg/Catch2.git;
+        mkdir -p Catch2/build;
+        cd Catch2/build;
+        cmake ..;
         cmake --build . --target install
 
     - name: Configure CMake
