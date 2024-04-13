@@ -10,19 +10,19 @@
 namespace tmpofd::elem {
 
 struct DocInfo {
-  string_t DocID;
-  string_t Title;
-  string_t Author;
-  string_t Subject;
-  string_t Abstract;
-  date_t CreationDate;
-  date_t ModDate;
-  string_t DocUsage;
-  loc_t Cover;
-  Keywords Keywords;
-  string_t Creator;
-  string_t CreatorVersion;
-  CustomDatas CustomDatas;
+  string_t doc_id_;
+  string_t title_;
+  string_t author_;
+  string_t subject_;
+  string_t abstract_;
+  date_t creation_date_;
+  date_t mod_date_;
+  string_t doc_usage_;
+  loc_t cover_;
+  Keywords keywords_;
+  string_t creator_;
+  string_t creator_version_;
+  CustomDatas custom_datas_;
 
 };
 
@@ -33,19 +33,19 @@ struct DocInfo {
 REFLECT(
     tmpofd::elem::DocInfo, OFD_NAMESPACE"DocInfo",
     FIELDS(
-        FIELD(&tmpofd::elem::DocInfo::DocID, OFD_NAMESPACE"DocID"),
-        FIELD(&tmpofd::elem::DocInfo::Title, OFD_NAMESPACE"Title"),
-        FIELD(&tmpofd::elem::DocInfo::Author, OFD_NAMESPACE"Author"),
-        FIELD(&tmpofd::elem::DocInfo::Subject, OFD_NAMESPACE"Subject"),
-        FIELD(&tmpofd::elem::DocInfo::Abstract, OFD_NAMESPACE"Abstract"),
-        FIELD(&tmpofd::elem::DocInfo::CreationDate, OFD_NAMESPACE"CreationDate"),
-        FIELD(&tmpofd::elem::DocInfo::ModDate, OFD_NAMESPACE"ModDate"),
-        FIELD(&tmpofd::elem::DocInfo::DocUsage, OFD_NAMESPACE"DocUsage"),
-        FIELD(&tmpofd::elem::DocInfo::Cover, OFD_NAMESPACE"Cover"),
-        FIELD(&tmpofd::elem::DocInfo::Keywords, OFD_NAMESPACE"Keywords"),
-        FIELD(&tmpofd::elem::DocInfo::Creator, OFD_NAMESPACE"Creator"),
-        FIELD(&tmpofd::elem::DocInfo::CreatorVersion, OFD_NAMESPACE"CreatorVersion"),
-        FIELD(&tmpofd::elem::DocInfo::CustomDatas, OFD_NAMESPACE"CustomDatas")
+        FIELD(&tmpofd::elem::DocInfo::doc_id_, OFD_NAMESPACE"DocID"),
+        FIELD(&tmpofd::elem::DocInfo::title_, OFD_NAMESPACE"Title"),
+        FIELD(&tmpofd::elem::DocInfo::author_, OFD_NAMESPACE"Author"),
+        FIELD(&tmpofd::elem::DocInfo::subject_, OFD_NAMESPACE"Subject"),
+        FIELD(&tmpofd::elem::DocInfo::abstract_, OFD_NAMESPACE"Abstract"),
+        FIELD(&tmpofd::elem::DocInfo::creation_date_, OFD_NAMESPACE"CreationDate"),
+        FIELD(&tmpofd::elem::DocInfo::mod_date_, OFD_NAMESPACE"ModDate"),
+        FIELD(&tmpofd::elem::DocInfo::doc_usage_, OFD_NAMESPACE"DocUsage"),
+        FIELD(&tmpofd::elem::DocInfo::cover_, OFD_NAMESPACE"Cover"),
+        FIELD(&tmpofd::elem::DocInfo::keywords_, OFD_NAMESPACE"Keywords"),
+        FIELD(&tmpofd::elem::DocInfo::creator_, OFD_NAMESPACE"Creator"),
+        FIELD(&tmpofd::elem::DocInfo::creator_version_, OFD_NAMESPACE"CreatorVersion"),
+        FIELD(&tmpofd::elem::DocInfo::custom_datas_, OFD_NAMESPACE"CustomDatas")
     )
 )
 

@@ -9,10 +9,10 @@
 namespace tmpofd::elem {
 
 struct OFD {
-  attribute_t<string_t> Version;
-  attribute_t<string_t> DocType;
+  attribute_t<string_t> version_;
+  attribute_t<string_t> doc_type_;
 
-  vector_t<DocBody> DocBody;
+  vector_t<DocBody> doc_body_;
 
 };
 
@@ -23,9 +23,9 @@ struct OFD {
 REFLECT(
     tmpofd::elem::OFD, OFD_NAMESPACE"OFD",
     FIELDS(
-        FIELD(&tmpofd::elem::OFD::Version, "Version"),
-        FIELD(&tmpofd::elem::OFD::DocType, "DocType"),
-        FIELD(&tmpofd::elem::OFD::DocBody, OFD_NAMESPACE"DocBody")
+        FIELD(&tmpofd::elem::OFD::version_, "Version"),
+        FIELD(&tmpofd::elem::OFD::doc_type_, "DocType"),
+        FIELD(&tmpofd::elem::OFD::doc_body_, OFD_NAMESPACE"DocBody")
     )
 )
 

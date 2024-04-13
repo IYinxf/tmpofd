@@ -10,7 +10,7 @@
 namespace tmpofd::elem {
 
 struct Keywords {
-  vector_t<string_t> Keyword;
+  vector_t<string_t> keyword_;
 
 };
 
@@ -21,7 +21,7 @@ struct Keywords {
 REFLECT(
     tmpofd::elem::Keywords, OFD_NAMESPACE"Keywords",
     FIELDS(
-        FIELD(&tmpofd::elem::Keywords::Keyword, OFD_NAMESPACE"Keyword")
+        FIELD(&tmpofd::elem::Keywords::keyword_, OFD_NAMESPACE"Keyword")
     )
 )
 

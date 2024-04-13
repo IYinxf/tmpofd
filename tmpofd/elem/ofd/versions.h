@@ -9,7 +9,7 @@
 namespace tmpofd::elem {
 
 struct Versions {
-  vector_t<Version> Version;
+  vector_t<Version> Version_;
 
 };
 
@@ -20,7 +20,7 @@ struct Versions {
 REFLECT(
     tmpofd::elem::Versions, OFD_NAMESPACE"Versions",
     FIELDS(
-        FIELD(&tmpofd::elem::Versions::Version, OFD_NAMESPACE"Version")
+        FIELD(&tmpofd::elem::Versions::Version_, OFD_NAMESPACE"Version")
     )
 )
 

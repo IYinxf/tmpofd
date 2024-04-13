@@ -10,10 +10,10 @@
 namespace tmpofd::elem {
 
 struct Version {
-  attribute_t<id_t> ID{};
-  attribute_t<int_t> Index{};
-  attribute_t<bool_t> Current{};
-  attribute_t<loc_t> BaseLoc;
+  attribute_t<id_t> ID_{};
+  attribute_t<int_t> Index_{};
+  attribute_t<bool_t> Current_{};
+  attribute_t<loc_t> BaseLoc_;
 
 };
 
@@ -24,10 +24,10 @@ struct Version {
 REFLECT(
     tmpofd::elem::Version, OFD_NAMESPACE"Version",
     FIELDS(
-        FIELD(&tmpofd::elem::Version::ID, "ID"),
-        FIELD(&tmpofd::elem::Version::Index, "Index"),
-        FIELD(&tmpofd::elem::Version::Current, "Current"),
-        FIELD(&tmpofd::elem::Version::BaseLoc, "BaseLoc")
+        FIELD(&tmpofd::elem::Version::ID_, "ID"),
+        FIELD(&tmpofd::elem::Version::Index_, "Index"),
+        FIELD(&tmpofd::elem::Version::Current_, "Current"),
+        FIELD(&tmpofd::elem::Version::BaseLoc_, "BaseLoc")
     )
 )
 

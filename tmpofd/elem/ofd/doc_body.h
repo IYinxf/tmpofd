@@ -10,10 +10,10 @@
 namespace tmpofd::elem {
 
 struct DocBody {
-  DocInfo DocInfo;
-  loc_t DocRoot;
-  Versions Versions;
-  loc_t Signatures;
+  DocInfo doc_info_;
+  loc_t doc_root_;
+  Versions versions_;
+  loc_t signatures_;
 
 };
 
@@ -24,10 +24,10 @@ struct DocBody {
 REFLECT(
     tmpofd::elem::DocBody, OFD_NAMESPACE"DocBody",
     FIELDS(
-        FIELD(&tmpofd::elem::DocBody::DocInfo, OFD_NAMESPACE"DocInfo"),
-        FIELD(&tmpofd::elem::DocBody::DocRoot, OFD_NAMESPACE"DocRoot"),
-        FIELD(&tmpofd::elem::DocBody::Versions, OFD_NAMESPACE"Versions"),
-        FIELD(&tmpofd::elem::DocBody::Signatures, OFD_NAMESPACE"Signatures")
+        FIELD(&tmpofd::elem::DocBody::doc_info_, OFD_NAMESPACE"DocInfo"),
+        FIELD(&tmpofd::elem::DocBody::doc_root_, OFD_NAMESPACE"DocRoot"),
+        FIELD(&tmpofd::elem::DocBody::versions_, OFD_NAMESPACE"Versions"),
+        FIELD(&tmpofd::elem::DocBody::signatures_, OFD_NAMESPACE"Signatures")
     )
 )
 
