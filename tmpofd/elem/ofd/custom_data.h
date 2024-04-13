@@ -10,8 +10,19 @@
 namespace tmpofd::elem {
 
 struct CustomData {
-  attribute_t<string_t > Name;
+  attribute_t<string_t> Name;
 
 };
 
 } // tmpofd::elem
+
+#include "tmpofd/refl/reflect_begin.h"
+
+REFLECT(
+    tmpofd::elem::CustomData, OFD_NAMESPACE"CustomData",
+    FIELDS(
+        FIELD(&tmpofd::elem::CustomData::Name, "Name")
+    )
+)
+
+#include "tmpofd/refl/reflect_end.h"

@@ -22,31 +22,30 @@ constexpr inline bool is_reflected_v = is_reflected_t<T>::value;
 
 template<typename T>
 void test(T &t) {
-  auto reflected_ofd = tmpofd::refl::reflect_it(t);
-  std::cout << "struct name = " << reflected_ofd.struct_name() << std::endl;
+  auto reflected = tmpofd::refl::reflect_it(t);
+  std::cout << "struct = " << reflected.struct_name() << std::endl;
 
-  auto b = is_reflected_v<decltype(t)>;
-
-  reflected_ofd.visit_fields(
+  reflected.visit_fields(
       [&t](auto &&field) {
         if constexpr (tmpofd::elem::internal::is_attribute_v<decltype(field.invoke(t))>) {
           auto &attr = field.invoke(t);
-          std::cout << "\tattribute field name = " << field.name() << std::endl;
-          std::cout << "\tattribute field value = " << attr.value_ << std::endl;
-          attr.value_ = "test";
-          std::cout << "\tattribute field value = " << attr.value_ << std::endl;
+          std::cout << "attribute = " << field.name() << ", value = " << attr << std::endl;
         } else if constexpr (tmpofd::elem::internal::is_vector_v<decltype(field.invoke(t))>) {
-          std::cout << "\t\tcontainer field name = " << field.name() << std::endl;
+          std::cout << "container = " << field.name() << std::endl;
           for (auto &i : field.invoke(t)) {
-            test(i);
+            if constexpr (is_reflected_v<decltype(i)>) {
+              test(i);
+            } else {
+              std::cout << "value = " << i << std::endl;
+            }
           }
         } else {
-          std::cout << "\t\tfield name = " << field.name() << std::endl;
-          auto &member = field.invoke(t);
-          std::cout << "\t\tfield value = " << member << std::endl;
-          member = "test";
-          tmpofd::elem::loc_t value("test1");
-          std::cout << "\t\tfield value = " << member << std::endl;
+          if constexpr (is_reflected_v<decltype(field.invoke(t))>) {
+            test(field.invoke(t));
+          } else {
+            auto &member = field.invoke(t);
+            std::cout << "field = " << field.name() << ", value = " << member << std::endl;
+          }
         }
       }
   );
@@ -54,8 +53,31 @@ void test(T &t) {
 }
 
 int main() {
-  tmpofd::elem::OFD ofd{"1.1", "OFD", {{"Doc_0/Document.xml", "Doc_0/Signs/Signatures.xml"}}};
-  auto b = is_reflected_v<decltype(ofd)>;
+  tmpofd::elem::OFD ofd;
+  ofd.Version = "Version";
+  ofd.DocType = "DocType";
+  ofd.DocBody = {
+      {
+          {
+              "DocID",
+              "Title",
+              "Author",
+              "Subject",
+              "Abstract",
+              "CreationDate",
+              "ModDate",
+              "DocUsage",
+              "Cover",
+              {{"Keyword1", "Keyword2"}},
+              "Creator",
+              "CreatorVersion",
+              {{{"CustomData1"}, {"CustomData2"}}}
+          },
+          "DocRoot",
+          {{{1, 1, true, "Version1"}, {2, 2, false, "Version2"}}},
+          "Signatures"
+      }
+  };
 
   test(ofd);
 

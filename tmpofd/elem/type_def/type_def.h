@@ -23,8 +23,23 @@ constexpr inline bool is_array_t<array_t<T>> = true;
 
 template<typename T>
 struct attribute_t {
+  using type_ = T;
+
+  attribute_t &operator=(T &&value) {
+    value_ = std::move(value);
+    return *this;
+  }
+
+  explicit operator T() { return value_; }
+
   T value_;
 };
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os, const attribute_t<T>& attr) {
+  os << attr.value_;
+  return os;
+}
 
 template<typename>
 constexpr inline bool is_attribute_t = false;

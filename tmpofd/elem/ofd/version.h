@@ -18,3 +18,17 @@ struct Version {
 };
 
 } // tmpofd::elem
+
+#include "tmpofd/refl/reflect_begin.h"
+
+REFLECT(
+    tmpofd::elem::Version, OFD_NAMESPACE"Version",
+    FIELDS(
+        FIELD(&tmpofd::elem::Version::ID, "ID"),
+        FIELD(&tmpofd::elem::Version::Index, "Index"),
+        FIELD(&tmpofd::elem::Version::Current, "Current"),
+        FIELD(&tmpofd::elem::Version::BaseLoc, "BaseLoc")
+    )
+)
+
+#include "tmpofd/refl/reflect_end.h"

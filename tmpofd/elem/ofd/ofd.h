@@ -23,8 +23,8 @@ struct OFD {
 REFLECT(
     tmpofd::elem::OFD, OFD_NAMESPACE"OFD",
     FIELDS(
-        FIELD(&tmpofd::elem::OFD::Version, OFD_NAMESPACE"Version"),
-        FIELD(&tmpofd::elem::OFD::DocType, OFD_NAMESPACE"DocType"),
+        FIELD(&tmpofd::elem::OFD::Version, "Version"),
+        FIELD(&tmpofd::elem::OFD::DocType, "DocType"),
         FIELD(&tmpofd::elem::OFD::DocBody, OFD_NAMESPACE"DocBody")
     )
 )

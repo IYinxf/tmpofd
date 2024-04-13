@@ -14,3 +14,14 @@ struct CustomDatas {
 };
 
 } // tmpofd::elem
+
+#include "tmpofd/refl/reflect_begin.h"
+
+REFLECT(
+    tmpofd::elem::CustomDatas, OFD_NAMESPACE"CustomDatas",
+    FIELDS(
+        FIELD(&tmpofd::elem::CustomDatas::CustomData, OFD_NAMESPACE"CustomData")
+    )
+)
+
+#include "tmpofd/refl/reflect_end.h"

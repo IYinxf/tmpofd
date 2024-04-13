@@ -14,3 +14,14 @@ struct Versions {
 };
 
 } // tmpofd::elem
+
+#include "tmpofd/refl/reflect_begin.h"
+
+REFLECT(
+    tmpofd::elem::Versions, OFD_NAMESPACE"Versions",
+    FIELDS(
+        FIELD(&tmpofd::elem::Versions::Version, OFD_NAMESPACE"Version")
+    )
+)
+
+#include "tmpofd/refl/reflect_end.h"
