@@ -17,10 +17,11 @@ struct Versions {
 
 #include "tmpofd/refl/reflect_begin.h"
 
+using namespace tmpofd::elem;
 REFLECT(
-    tmpofd::elem::Versions, OFD_NAMESPACE"Versions",
-    FIELDS(
-        FIELD(&tmpofd::elem::Versions::Version_, OFD_NAMESPACE"Version")
+    Versions, OFD_NAMESPACE"Versions",
+    ATTR() CHILD_ELEM(
+        FIELD(&Versions::Version_, OFD_NAMESPACE"Version")
     )
 )
 

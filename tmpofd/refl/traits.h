@@ -10,36 +10,81 @@
 
 namespace tmpofd::refl {
 
+/**
+ * reflect object 'it' to reflected<T>
+ */
+template<typename T>
+constexpr auto reflect_it(T const &it);
+
 namespace internal {
 
 namespace detail {
 
-template<typename>
-struct list_size_t;
+/**
+ * int
+ */
+template<typename T>
+struct basic_type_traits {
+  using type = T;
+};
 
-template<template<typename...> typename T, typename... Args>
-struct list_size_t<T<Args...>> {
-  constexpr static size_t value_ = sizeof...(Args);
+/**
+ * int FOO::*
+ */
+template<typename Class, typename T>
+struct basic_type_traits<T Class::*> {
+  using type = T;
+};
+
+/**
+ * std::vector<int> FOO::*
+ */
+template<typename Class, typename T>
+struct basic_type_traits<std::vector<T> Class::*> {
+  using type = T;
 };
 
 template<typename T>
-constexpr size_t list_size_v = list_size_t<T>::value_;
+struct is_tuple_empty : std::false_type {};
+
+template<>
+struct is_tuple_empty<std::tuple<>> : std::true_type {};
+
+template<typename, typename = void>
+struct reflectable : std::false_type {};
 
 template<typename T>
-constexpr inline bool is_empty_list_v = list_size_v<T> == 0;
+struct reflectable<T, std::void_t<decltype(tmpofd::refl::reflect_it(std::declval<T>()))>> : std::true_type {};
+
+template<typename T>
+struct reflectable_in_tuple : reflectable<typename T::type> {};
+
+template<>
+struct reflectable_in_tuple<std::tuple<>> : std::false_type {};
+
+template<typename T>
+struct reflectable_in_tuple<std::tuple<T>> : reflectable_in_tuple<T> {};
+
+template<typename T, typename... Remains>
+struct reflectable_in_tuple<std::tuple<T, Remains...>> {
+  static constexpr bool value = reflectable_in_tuple<T>::value || reflectable_in_tuple<std::tuple<Remains...>>::value;
+};
 
 } // detail
 
 template<typename T>
-constexpr inline bool has_fields = !detail::is_empty_list_v<std::remove_cvref_t<decltype(T::fields_)>>;
+using basic_type_traits_t = typename detail::basic_type_traits<T>::type;
+
+template<typename T>
+constexpr inline bool is_tuple_empty_v = detail::is_tuple_empty<std::remove_cvref_t<T>>::value;
 
 } // internal
 
 template<typename T>
 struct field_traits final {
-  constexpr field_traits(T &&pointer, std::string_view name)
-      : pointer_(std::forward<T>(pointer)),
-        name_(name) {}
+  using type = internal::basic_type_traits_t<T>;
+
+  constexpr field_traits(T &&pointer, std::string_view name) : pointer_(std::forward<T>(pointer)), name_(name) {}
 
   constexpr auto name() const noexcept { return name_; }
 
@@ -51,5 +96,19 @@ struct field_traits final {
   std::string_view name_;
 
 };
+
+/**
+ * it will be 'true' if class T defined reflect_it overload using 'reflect_begin.h' and 'reflect_end.h'
+ */
+template<typename T>
+constexpr inline bool reflectable_v = internal::detail::reflectable<std::remove_cvref_t<T>>::value;
+
+/**
+ * check is there a field reflectable in std::tuple
+ */
+template<typename T>
+constexpr inline bool reflectable_in_tuple_v = internal::detail::reflectable_in_tuple<
+    std::remove_cvref_t<decltype(T::element::child_elem_)>
+>::value;
 
 } // tmpofd::refl

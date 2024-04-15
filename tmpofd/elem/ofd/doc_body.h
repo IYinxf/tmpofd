@@ -21,13 +21,14 @@ struct DocBody {
 
 #include "tmpofd/refl/reflect_begin.h"
 
+using namespace tmpofd::elem;
 REFLECT(
-    tmpofd::elem::DocBody, OFD_NAMESPACE"DocBody",
-    FIELDS(
-        FIELD(&tmpofd::elem::DocBody::doc_info_, OFD_NAMESPACE"DocInfo"),
-        FIELD(&tmpofd::elem::DocBody::doc_root_, OFD_NAMESPACE"DocRoot"),
-        FIELD(&tmpofd::elem::DocBody::versions_, OFD_NAMESPACE"Versions"),
-        FIELD(&tmpofd::elem::DocBody::signatures_, OFD_NAMESPACE"Signatures")
+    DocBody, OFD_NAMESPACE"DocBody",
+    ATTR() CHILD_ELEM(
+        FIELD(&DocBody::doc_info_, OFD_NAMESPACE"DocInfo"),
+        FIELD(&DocBody::doc_root_, OFD_NAMESPACE"DocRoot"),
+        FIELD(&DocBody::versions_, OFD_NAMESPACE"Versions"),
+        FIELD(&DocBody::signatures_, OFD_NAMESPACE"Signatures")
     )
 )
 

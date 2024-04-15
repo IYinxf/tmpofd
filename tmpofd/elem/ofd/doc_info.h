@@ -30,22 +30,23 @@ struct DocInfo {
 
 #include "tmpofd/refl/reflect_begin.h"
 
+using namespace tmpofd::elem;
 REFLECT(
-    tmpofd::elem::DocInfo, OFD_NAMESPACE"DocInfo",
-    FIELDS(
-        FIELD(&tmpofd::elem::DocInfo::doc_id_, OFD_NAMESPACE"DocID"),
-        FIELD(&tmpofd::elem::DocInfo::title_, OFD_NAMESPACE"Title"),
-        FIELD(&tmpofd::elem::DocInfo::author_, OFD_NAMESPACE"Author"),
-        FIELD(&tmpofd::elem::DocInfo::subject_, OFD_NAMESPACE"Subject"),
-        FIELD(&tmpofd::elem::DocInfo::abstract_, OFD_NAMESPACE"Abstract"),
-        FIELD(&tmpofd::elem::DocInfo::creation_date_, OFD_NAMESPACE"CreationDate"),
-        FIELD(&tmpofd::elem::DocInfo::mod_date_, OFD_NAMESPACE"ModDate"),
-        FIELD(&tmpofd::elem::DocInfo::doc_usage_, OFD_NAMESPACE"DocUsage"),
-        FIELD(&tmpofd::elem::DocInfo::cover_, OFD_NAMESPACE"Cover"),
-        FIELD(&tmpofd::elem::DocInfo::keywords_, OFD_NAMESPACE"Keywords"),
-        FIELD(&tmpofd::elem::DocInfo::creator_, OFD_NAMESPACE"Creator"),
-        FIELD(&tmpofd::elem::DocInfo::creator_version_, OFD_NAMESPACE"CreatorVersion"),
-        FIELD(&tmpofd::elem::DocInfo::custom_datas_, OFD_NAMESPACE"CustomDatas")
+    DocInfo, OFD_NAMESPACE"DocInfo",
+    ATTR() CHILD_ELEM(
+        FIELD(&DocInfo::doc_id_, OFD_NAMESPACE"DocID"),
+        FIELD(&DocInfo::title_, OFD_NAMESPACE"Title"),
+        FIELD(&DocInfo::author_, OFD_NAMESPACE"Author"),
+        FIELD(&DocInfo::subject_, OFD_NAMESPACE"Subject"),
+        FIELD(&DocInfo::abstract_, OFD_NAMESPACE"Abstract"),
+        FIELD(&DocInfo::creation_date_, OFD_NAMESPACE"CreationDate"),
+        FIELD(&DocInfo::mod_date_, OFD_NAMESPACE"ModDate"),
+        FIELD(&DocInfo::doc_usage_, OFD_NAMESPACE"DocUsage"),
+        FIELD(&DocInfo::cover_, OFD_NAMESPACE"Cover"),
+        FIELD(&DocInfo::keywords_, OFD_NAMESPACE"Keywords"),
+        FIELD(&DocInfo::creator_, OFD_NAMESPACE"Creator"),
+        FIELD(&DocInfo::creator_version_, OFD_NAMESPACE"CreatorVersion"),
+        FIELD(&DocInfo::custom_datas_, OFD_NAMESPACE"CustomDatas")
     )
 )
 

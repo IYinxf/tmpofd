@@ -25,7 +25,7 @@ constexpr inline bool is_array_t<array_t<T>> = true;
 
 template<typename T>
 struct attribute_t {
-  using type_ = T;
+  using type = T;
 
   attribute_t &operator=(T &&value) {
     value_ = std::move(value);
@@ -38,7 +38,7 @@ struct attribute_t {
 };
 
 template<typename T>
-std::ostream& operator<<(std::ostream& os, const attribute_t<T>& attr) {
+std::ostream &operator<<(std::ostream &os, const attribute_t<T> &attr) {
   os << attr.value_;
   return os;
 }
@@ -61,13 +61,7 @@ constexpr inline bool is_vector_t<vector_t<T>> = true;
 } // detail
 
 template<typename T>
-constexpr inline bool is_array_v = detail::is_array_t<std::remove_cvref_t<T>>;
-
-template<typename T>
-constexpr inline bool is_attribute_v = detail::is_attribute_t<std::remove_cvref_t<T>>;
-
-template<typename T>
-constexpr inline bool is_vector_v = detail::is_vector_t<std::remove_cvref_t<T>>;
+constexpr inline bool is_array_t_v = detail::is_array_t<std::remove_cvref_t<T>>;
 
 } // internal
 
@@ -87,7 +81,7 @@ using date_t = string_t;
 
 using loc_t = std::filesystem::path;
 
-template<typename T, std::enable_if_t<!std::is_same_v<T, loc_t> && !internal::is_array_v<T>, int> = 0>
+template<typename T, std::enable_if_t<!std::is_same_v<T, loc_t> && !internal::is_array_t_v<T>, int> = 0>
 using array_t = internal::detail::array_t<T>;
 
 template<typename X, typename Y>
@@ -108,6 +102,12 @@ template<typename T>
 using attribute_t = internal::detail::attribute_t<T>;
 
 template<typename T>
+constexpr inline bool is_attribute_t_v = internal::detail::is_attribute_t<std::remove_cvref_t<T>>;
+
+template<typename T>
 using vector_t = internal::detail::vector_t<T>;
+
+template<typename T>
+constexpr inline bool is_vector_t_v = internal::detail::is_vector_t<std::remove_cvref_t<T>>;
 
 } // tmpofd::elem

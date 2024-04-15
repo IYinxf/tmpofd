@@ -18,10 +18,11 @@ struct Keywords {
 
 #include "tmpofd/refl/reflect_begin.h"
 
+using namespace tmpofd::elem;
 REFLECT(
-    tmpofd::elem::Keywords, OFD_NAMESPACE"Keywords",
-    FIELDS(
-        FIELD(&tmpofd::elem::Keywords::keyword_, OFD_NAMESPACE"Keyword")
+    Keywords, OFD_NAMESPACE"Keywords",
+    ATTR() CHILD_ELEM(
+        FIELD(&Keywords::keyword_, OFD_NAMESPACE"Keyword")
     )
 )
 

@@ -20,12 +20,14 @@ struct OFD {
 
 #include "tmpofd/refl/reflect_begin.h"
 
+using namespace tmpofd::elem;
 REFLECT(
-    tmpofd::elem::OFD, OFD_NAMESPACE"OFD",
-    FIELDS(
-        FIELD(&tmpofd::elem::OFD::version_, "Version"),
-        FIELD(&tmpofd::elem::OFD::doc_type_, "DocType"),
-        FIELD(&tmpofd::elem::OFD::doc_body_, OFD_NAMESPACE"DocBody")
+    OFD, OFD_NAMESPACE"OFD",
+    ATTR(
+        FIELD(&OFD::version_, "Version"),
+        FIELD(&OFD::doc_type_, "DocType")
+    ) CHILD_ELEM(
+        FIELD(&OFD::doc_body_, OFD_NAMESPACE"DocBody")
     )
 )
 

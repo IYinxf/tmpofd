@@ -6,6 +6,7 @@
 
 } // tmpofd::refl
 
-#undef REFLECT
-#undef FIELDS
 #undef FIELD
+#undef CHILD_ELEM
+#undef ATTR
+#undef REFLECT

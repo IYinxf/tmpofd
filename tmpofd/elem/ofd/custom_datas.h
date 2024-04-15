@@ -17,10 +17,11 @@ struct CustomDatas {
 
 #include "tmpofd/refl/reflect_begin.h"
 
+using namespace tmpofd::elem;
 REFLECT(
-    tmpofd::elem::CustomDatas, OFD_NAMESPACE"CustomDatas",
-    FIELDS(
-        FIELD(&tmpofd::elem::CustomDatas::custom_data_, OFD_NAMESPACE"CustomData")
+    CustomDatas, OFD_NAMESPACE"CustomDatas",
+    ATTR() CHILD_ELEM(
+        FIELD(&CustomDatas::custom_data_, OFD_NAMESPACE"CustomData")
     )
 )
 

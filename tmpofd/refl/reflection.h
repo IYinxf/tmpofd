@@ -8,28 +8,42 @@
 
 namespace tmpofd::refl {
 
+/**
+ * a class info container for ofd document object
+ */
 template<typename>
-struct struct_info;
+struct element;
 
-template<typename T>
-constexpr auto reflect_it(T const &it);
-
+/**
+ * accessor for class info
+ */
 template<typename T>
 struct reflected final {
-  using struct_ = struct_info<T>;
+  using element = element<T>;
 
-  constexpr auto struct_name() const noexcept {
-    return struct_::name();
+  constexpr auto elem_name() const noexcept {
+    return element::name();
   }
 
-  template<typename F>
-  void visit_fields(F &&callback) {
-    if constexpr (internal::has_fields<struct_>) {
-      auto fields = struct_::fields_;
+  template<typename CB>
+  void visit_attr(CB &&cb) {
+    if constexpr (!internal::is_tuple_empty_v<decltype(element::attr_)>) {
+      auto attr = element::attr_;
 
-      [&callback, &fields]<std::size_t... i>(std::index_sequence<i...>) {
-        (callback(std::get<i>(fields)), ...);
-      }(std::make_index_sequence<std::tuple_size_v<decltype(fields)>>());
+      [&cb, &attr]<std::size_t... i>(std::index_sequence<i...>) {
+        (cb(std::get<i>(attr)), ...);
+      }(std::make_index_sequence<std::tuple_size_v<decltype(attr)>>());
+    }
+  }
+
+  template<typename CB>
+  void visit_child_elem(CB &&cb) {
+    if constexpr (!internal::is_tuple_empty_v<decltype(element::child_elem_)>) {
+      auto child_elem = element::child_elem_;
+
+      [&cb, &child_elem]<std::size_t... i>(std::index_sequence<i...>) {
+        (cb(std::get<i>(child_elem)), ...);
+      }(std::make_index_sequence<std::tuple_size_v<decltype(child_elem)>>());
     }
   }
 
@@ -37,26 +51,10 @@ struct reflected final {
 
 namespace internal {
 
-namespace detail {
-
-template<typename, typename = void>
-struct is_reflected : std::false_type {};
-
-template<typename T>
-struct is_reflected<
-    T, std::void_t<decltype(tmpofd::refl::reflect_it(std::declval<T>()))>
-> : std::true_type {
-};
-
-} // detail
-
 template<typename T>
 constexpr auto reflect() {
   return reflected<std::remove_cvref_t<T>>();
 }
-
-template<typename T>
-constexpr inline bool is_reflected_v =detail::is_reflected<std::remove_cvref_t<T>>::value;
 
 } // internal
 

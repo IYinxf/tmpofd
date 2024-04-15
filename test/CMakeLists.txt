@@ -6,4 +6,5 @@ macro(MAKE_TEST name)
     add_test(NAME ${name} COMMAND $<TARGET_FILE:${name}>)
 endmacro(MAKE_TEST)
 
+add_subdirectory(refl)
 add_subdirectory(serd)
